@@ -5,6 +5,9 @@ on:
     types:
       - created
 
+permissions:
+  contents: write  # Ensure the GITHUB_TOKEN has write permissions for contents
+
 jobs:
   archive:
     runs-on: ubuntu-latest
@@ -32,17 +35,30 @@ jobs:
         run: |
           zip -r artifacts/EdgeDeliveryGraphQl.zip EdgeDeliveryGraphQl
 
-      - name: Install GitHub CLI
-        run: sudo apt-get install gh
-
       - name: Upload EdgeDeliveryBridge to Release
-        run: gh release upload ${{ github.event.release.tag_name }} artifacts/EdgeDeliveryBridge.zip --repo ${{ github.repository }}
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: artifacts/EdgeDeliveryBridge.zip
+          tag: ${{ github.event.release.tag_name }}
 
       - name: Upload EdgeDeliveryBridgeGraphQl to Release
-        run: gh release upload ${{ github.event.release.tag_name }} artifacts/EdgeDeliveryBridgeGraphQl.zip --repo ${{ github.repository }}
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: artifacts/EdgeDeliveryBridgeGraphQl.zip
+          tag: ${{ github.event.release.tag_name }}
 
       - name: Upload EdgeDeliveryComponents to Release
-        run: gh release upload ${{ github.event.release.tag_name }} artifacts/EdgeDeliveryComponents.zip --repo ${{ github.repository }}
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: artifacts/EdgeDeliveryComponents.zip
+          tag: ${{ github.event.release.tag_name }}
 
       - name: Upload EdgeDeliveryGraphQl to Release
-        run: gh release upload ${{ github.event.release.tag_name }} artifacts/EdgeDeliveryGraphQl.zip --repo ${{ github.repository }}
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: artifacts/EdgeDeliveryGraphQl.zip
+          tag: ${{ github.event.release.tag_name }}
