@@ -11,7 +11,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4 # Updated to v4
+        uses: actions/checkout@v4
 
       - name: Prepare Artifact Directory
         run: mkdir -p artifacts
@@ -20,38 +20,46 @@ jobs:
         run: |
           zip -r artifacts/EdgeDeliveryBridge.zip EdgeDeliveryBridge
 
-      - name: Upload EdgeDeliveryBridge artifact
-        uses: actions/upload-artifact@v4 # Updated to v4
-        with:
-          name: EdgeDeliveryBridge
-          path: artifacts/EdgeDeliveryBridge.zip
-
       - name: Package EdgeDeliveryBridgeGraphQl Module
         run: |
           zip -r artifacts/EdgeDeliveryBridgeGraphQl.zip EdgeDeliveryBridgeGraphQl
-
-      - name: Upload EdgeDeliveryBridgeGraphQl artifact
-        uses: actions/upload-artifact@v4 # Updated to v4
-        with:
-          name: EdgeDeliveryBridgeGraphQl
-          path: artifacts/EdgeDeliveryBridgeGraphQl.zip
 
       - name: Package EdgeDeliveryComponents Module
         run: |
           zip -r artifacts/EdgeDeliveryComponents.zip EdgeDeliveryComponents
 
-      - name: Upload EdgeDeliveryComponents artifact
-        uses: actions/upload-artifact@v4 # Updated to v4
-        with:
-          name: EdgeDeliveryComponents
-          path: artifacts/EdgeDeliveryComponents.zip
-
       - name: Package EdgeDeliveryGraphQl Module
         run: |
           zip -r artifacts/EdgeDeliveryGraphQl.zip EdgeDeliveryGraphQl
 
-      - name: Upload EdgeDeliveryGraphQl artifact
-        uses: actions/upload-artifact@v4 # Updated to v4
+      - name: Upload EdgeDeliveryBridge to Release
+        uses: actions/upload-release-asset@v1
         with:
-          name: EdgeDeliveryGraphQl
-          path: artifacts/EdgeDeliveryGraphQl.zip
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: artifacts/EdgeDeliveryBridge.zip
+          asset_name: EdgeDeliveryBridge.zip
+          asset_content_type: application/zip
+
+      - name: Upload EdgeDeliveryBridgeGraphQl to Release
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: artifacts/EdgeDeliveryBridgeGraphQl.zip
+          asset_name: EdgeDeliveryBridgeGraphQl.zip
+          asset_content_type: application/zip
+
+      - name: Upload EdgeDeliveryComponents to Release
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: artifacts/EdgeDeliveryComponents.zip
+          asset_name: EdgeDeliveryComponents.zip
+          asset_content_type: application/zip
+
+      - name: Upload EdgeDeliveryGraphQl to Release
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: artifacts/EdgeDeliveryGraphQl.zip
+          asset_name: EdgeDeliveryGraphQl.zip
+          asset_content_type: application/zip
